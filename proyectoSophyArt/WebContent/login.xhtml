@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+ <p:growl id="ingresoMensaje" showDetail="true"/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		
+   	<p:panelGrid columns="2"   style="margin:0 auto;  top:400px;width:30%;" >
+  
+   		<f:facet name="header"> <br></br>Ingreso de Usuario a la plataforma SophyArt
+   		<br></br><br></br>
+   		</f:facet>
+   		
+   		<h:outputText value="Ingrese el Usuario"><br> </br><br> </br>
+   		</h:outputText>
+   		<p:inputText id="user1" value="#{loginBean.usuario.userName}"  required="true" />
+   		<h:outputText value="Ingrese La contraseña"></h:outputText>
+   		<p:password value="#{loginBean.usuario.password}" id="pass" required="true"/>
+   		<f:facet name="footer" style="text-align: center ">
+   		<br></br> <p:messages  showDetail="true"/>
+		<p:captcha label="seguridad" />
+
+   	 <p:commandButton value="Ingresar" action="#{loginBean.pasarClase}" update="ingresoMensaje"  />  	
+   	<br></br>
+   	<br></br></f:facet>
+   	</p:panelGrid>
+   
+   </h:form>
+   
+       
+    </ui:define>
+</ui:composition>
+</html>

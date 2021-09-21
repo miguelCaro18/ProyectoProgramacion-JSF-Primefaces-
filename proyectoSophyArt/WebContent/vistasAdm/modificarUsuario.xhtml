@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<title>Agregar Nuevo Usuario</title>
+<style type="text/css">
+    .ui-widget {
+        font-size: 90%;
+    }
+</style>
+    </h:head>
+     
+    <h:body>
+ <center>
+        <h:form>
+            <h2>Actualizar Usuario</h2>
+            <h4>Formulario de Actualización</h4>
+            <table>
+                <tr>
+                    <td>Nombres y Apellidos:</td>
+                    <td>
+                   <p:inputText id="text1" value="#{AdmUser.usuarioElegido.fullName }" maxlength="30" required="true">
+            		<p:keyFilter regEx="/[a-z _]/i"/>  
+       				 </p:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Usuario:</td>
+                    <td>
+                     <p:outputLabel id="user" value="#{AdmUser.usuarioElegido.userName }"/>
+                    </td>
+                </tr>
+                  <tr>
+                    <td>Ultimo dia Cambio Cont</td>
+                    <td>
+ 						<p:outputLabel id="ultimoDia" value="#{AdmUser.usuarioElegido.dateLastPassword }"/>
+                    </td>
+                </tr>
+                  <tr>
+                    <td>Teléfono</td>
+                    <td>
+ 						<p:inputText id="tel" value="#{AdmUser.usuarioElegido.phoneNumber}" maxlength="10">
+ 						<p:keyFilter for="tel" mask="num"/>
+ 						</p:inputText>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Email Address:</td>
+                    <td>
+                        <p:inputText id="email" required="true" label="email" size="40" 
+requiredMessage="por favor ingrese el correo." validatorMessage="Email no valido" value="#{AdmUser.usuarioElegido.emailAddress}">
+
+	  <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		</p:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tipo de Usuario</td>
+                    <td>
+                        <h:selectOneMenu label="TipoUser"
+                                         value="#{AdmUser.usuarioElegido.userType}" disabled="#{AdmUser.admin}">
+                            <f:selectItem itemLabel="Administrador" itemValue="A" />
+                            <f:selectItem itemLabel="Auxiliar Administrativo" itemValue="O" />
+                            <f:selectItem itemLabel="Empleado" itemValue="E" />
+                        </h:selectOneMenu>
+                    </td>
+                </tr>
+            </table>
+            <p><p:commandButton value="Modificar" action="#{AdmUser.actualizarElegido}">
+            </p:commandButton></p>
+        </h:form>
+        </center>
+    </h:body>   
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html 	xmlns="http://www.w3.org/1999/xhtml"
+    	xmlns:ui="http://java.sun.com/jsf/facelets"
+   	 	xmlns:h="http://java.sun.com/jsf/html"
+   	 	xmlns:f="http://java.sun.com/jsf/core"
+      	xmlns:p="http://primefaces.org/ui"
+ 	 	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+<title>Agregar Nuevo Usuario</title>
+<style type="text/css">
+    .ui-widget {
+        font-size: 90%;
+    }
+</style>
+    </h:head>
+     
+    <h:body>
+ <center>
+        <h:form>
+         <p:growl id="growl" showDetail="true" />  
+            <h2>Registro de Usuarios</h2>
+            <h4>Formulario de Registro</h4>
+            <table>
+                <tr>
+                    <td>Nombres y Apellidos:</td>
+                    <td>
+                   <p:inputText id="text1" value="#{AdmUser.usuarioNuevo.fullName }" requiredMessage="por favor ingrese  el nombre."   required="true" maxlength="60">
+            		<p:keyFilter regEx="/[a-z _]/i"/>  
+       				 </p:inputText>
+                    </td>
+                </tr> 
+                <tr>
+                    <td>Usuario:</td>
+                    <td>
+                        <p:inputText label="user"
+                                     id="user" value="#{AdmUser.usuarioNuevo.userName}"
+                                     required="true" requiredMessage="por favor ingrese el usuario."  maxlength="8">
+                                     	<p:keyFilter regEx="/[a-z0-9_]/i"/> 
+                                     </p:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Contraseña:</td>
+                    <td>
+ 						<p:password id="contra1" value="#{AdmUser.usuarioNuevo.password}" match="contra2" validatorMessage="la contraseña debe tener por lo menos, 1 mayúscula, 1 minuscula, 1 numero y 1 caracter especial " feedback="true" required="true" maxlength="20">
+ 						<f:validateLength minimum="6" ></f:validateLength>
+ 						<f:validateRegex pattern="^(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{7,30}$" ></f:validateRegex>
+ 						</p:password>
+                    </td>
+                </tr>
+                 <tr>
+                    <td>Confirmar Contraseña:</td>
+                    <td>
+ 						<p:password id="contra2" value="#{AdmUser.usuarioNuevo.password}"  feedback="true" requiredMessage="por favor ingrese contraseña." required="true" maxlength="20">
+ 						<f:validateLength minimum="6" ></f:validateLength>
+ 						</p:password>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ingresar Teléfono</td>
+                    <td>
+ 						<p:inputText id="tel" value="#{AdmUser.usuarioNuevo.phoneNumber }" maxlength="10"  requiredMessage="Se debe ingresar un telefono de al menos 6 números" >
+ 						<f:validateLength minimum="6"></f:validateLength>
+ 						<p:keyFilter for="tel" mask="num"/>
+ 						</p:inputText>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Email Address:</td>
+                    <td>
+                        <p:inputText id="email" required="true" label="email" size="40" 
+				requiredMessage="por favor ingrese el correo." validatorMessage="Email no valido" value="#{AdmUser.usuarioNuevo.emailAddress}">
+
+	  <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+		</p:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tipo de Usuario</td>
+                    <td>
+                        <p:selectOneMenu id="tipoUsuario" 
+                                         value="#{AdmUser.usuarioNuevo.userType}">
+                            <f:selectItem itemLabel="Administrador" itemValue="A" />
+                            <f:selectItem itemLabel="Auxiliar Administrativo" itemValue="O" />
+                            <f:selectItem itemLabel="Empleado" itemValue="E" />
+                        </p:selectOneMenu>
+                    </td>
+                </tr>
+            </table>
+            
+            <p><h:commandButton value="Register" action="#{AdmUser.registrarNuevoUsuario}" /></p>
+        </h:form>
+        </center>
+
+
+    </h:body>
+     
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<title>Modificar Parametro</title>
+<style type="text/css">
+    .ui-widget {
+        font-size: 90%;
+    }
+</style>
+    </h:head>
+     
+    <h:body>
+ <center>
+        <h:form>
+         <p:growl id="growl" showDetail="true"  />  
+            <h2>Modificar Parametro</h2>
+            <h4>Formulario de Modifcar</h4>
+            <table>
+                <tr>
+                    <td>Codigo del Parametro</td>
+                    <td>
+                   <p:outputLabel id="codigo" value="#{beanPara.elegido.codigoParametro}"/>
+
+                    </td>
+                </tr>
+                <tr>
+					 <td>Ingrese Parametro:</td>
+                    <td>
+                        <p:inputText label="parametro"
+                                     id="parametro" value="#{beanPara.pasarParametroElegido}"
+                                     required="true" maxlength="7" >
+                                     <p:keyFilter  for="parametro" mask="/[a-z0-9_]/i"/>  
+                                     </p:inputText>                         
+                    </td>
+                </tr>
+                               <tr>
+                    <td>Descripcción:</td>
+                    <td>
+                     <p:inputTextarea label="Descripccion" rows="5" cols="30" value="#{beanPara.elegido.descripcion}" 
+                     counter="display" maxlength="60" counterTemplate="{0} faltantes." required="true" />
+                    </td>
+                </tr>
+                <tr>
+                <td></td>
+                <td><h:outputText id="display" />
+                </td></tr>
+            </table>           
+            <p><h:commandButton value="Register" action="#{beanPara.modificarElegidoDatos}" /></p>
+        </h:form>
+        </center>
+    </h:body>  
+</html>

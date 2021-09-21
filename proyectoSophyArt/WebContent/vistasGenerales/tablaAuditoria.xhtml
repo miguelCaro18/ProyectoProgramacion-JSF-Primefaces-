@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<ui:composition template="/WEB-INF/templates/BasicTemplate2.xhtml">
+
+
+	<ui:define name="left">
+    <h:form id="form">
+       
+    <p:growl id="messages" showDetail="false"/>
+   <p:menu>
+                <p:submenu label="Clientes">
+            <p:menuitem value="Gestión Compras" action="#{funcionesPase.pasarVistaCompras }" />
+            <p:menuitem value="Lista Clientes" action="#{funcionesPase.pasarVistaClientes }" />
+        </p:submenu>
+        <p:submenu label="Usuarios">
+            <p:menuitem value="Auditoria" action="#{funcionesPase.pasarVistaAuditoria}"   />
+            <p:menuitem value="Lista Usuarios" action="#{funcionesPase.pasarVistaUsuarios}"  />
+        </p:submenu>
+         <p:submenu label="Empresa y Parámetros">
+            <p:menuitem value="Empresa" action="#{funcionesPase.pasarVistaEmpresa}"  />
+            <p:menuitem value="Exposiciones" action="#{funcionesPase.pasarVistaExposiciones}" />
+            <p:menuitem value="Productos" action="#{funcionesPase.pasarVistaProductos}" />
+            <p:menuitem value="Categoria" action="#{funcionesPase.pasarVistaCategoria}" />
+            <p:menuitem value="Parámetros del Sistema" action="#{funcionesPase.pasarVistaParametros}" />
+        </p:submenu>
+    </p:menu>
+    
+    </h:form>
+    
+	</ui:define>
+
+    <ui:define name="content">
+	
+	<style type="text/css">
+    .ui-datatable .ui-datatable-header {
+        text-align: right !important;
+    }
+     
+    .ui-button-text-only .ui-button-text {
+        padding: 0.3em 0.4em;
+    }
+     
+    .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+        visibility: hidden;
+    }
+     
+    .ui-filter-column .ui-column-customfilter .custom-filter {
+        width: 100%;
+        box-sizing: border-box;
+    }
+     
+    .year-spinner input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+ 
+ 
+<h:form>
+    <p:dataTable  id="Auditoria" var="audit" value="#{beanAudit.audito}"  widgetVar="TablaAudito"
+                emptyMessage="No se encontraron parametros con el filtro elegido" filteredValue="#{beanAudit.auditoElegidos}">
+ 
+        <f:facet name="header">
+            <p:outputPanel>
+              <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
+                <h:outputText value="Buscar En Tabla Parametros" />
+                <p:inputText id="globalFilter" onkeyup="PF('TablaAudito').filter()" style="width:150px" placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+ 
+ 	  <p:column filterBy="#{audit.addressIP}" headerText="IP Modificación"  filterMatchMode="contains">
+            <h:outputText value="#{audit.addressIP}" />
+        </p:column>
+        	  <p:column filterBy="#audit.createDate}" headerText="Fecha" filterMatchMode="contains">
+            <h:outputText value="#{audit.createDate}" />
+        </p:column>
+        	  <p:column filterBy="#{beanAudit.darGeneral(audit.operationCrud)}" headerText="Tipo Operación" filterMatchMode="contains">
+            <h:outputText value="#{beanAudit.darGeneral(audit.operationCrud)}" />
+        </p:column>
+        	  <p:column filterBy="#{audit.tableName}" headerText="Tabla Modificada"  filterMatchMode="contains">
+            <h:outputText value="#{audit.tableName}" />
+        </p:column>
+        	  <p:column filterBy="#{beanAudit.nombreModifica(audit.userId)}" headerText="Usuario"  filterMatchMode="contains">
+            <h:outputText value="#{beanAudit.nombreModifica(audit.userId)}" />
+        </p:column>
+
+    </p:dataTable>
+       <p:poll interval="20" update="Auditoria"/>
+  
+</h:form>
+    </ui:define>
+</ui:composition>
+</html>

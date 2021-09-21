@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+</h:head>
+<ui:composition template="/WEB-INF/templates/BasicTemplate2.xhtml">
+
+
+	<ui:define name="left">
+    <h:form id="form">
+       
+    <p:growl id="messages" showDetail="true"/>
+   <p:menu>
+                <p:submenu label="Clientes">
+            <p:menuitem value="Gestión Compras" action="#{funcionesPase.pasarVistaCompras }" />
+            <p:menuitem value="Lista Clientes" action="#{funcionesPase.pasarVistaClientes }" />
+        </p:submenu>
+        <p:submenu label="Usuarios">
+            <p:menuitem value="Auditoria" action="#{funcionesPase.pasarVistaAuditoria}"   />
+            <p:menuitem value="Lista Usuarios" action="#{funcionesPase.pasarVistaUsuarios}"  />
+        </p:submenu>
+         <p:submenu label="Empresa y Parámetros">
+            <p:menuitem value="Empresa" action="#{funcionesPase.pasarVistaEmpresa}"  />
+            <p:menuitem value="Exposiciones" action="#{funcionesPase.pasarVistaExposiciones}" />
+            <p:menuitem value="Productos" action="#{funcionesPase.pasarVistaProductos}" />
+            <p:menuitem value="Categoria" action="#{funcionesPase.pasarVistaCategoria}" />
+            <p:menuitem value="Parámetros del Sistema" action="#{funcionesPase.pasarVistaParametros}" />
+        </p:submenu>
+    </p:menu>
+    
+    </h:form>
+    
+	</ui:define>
+
+    <ui:define name="content">
+	
+	<style type="text/css">
+    .ui-datatable .ui-datatable-header {
+        text-align: right !important;
+    }
+     
+    .ui-button-text-only .ui-button-text {
+        padding: 0.3em 0.4em;
+    }
+     
+    .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+        visibility: hidden;
+    }
+     
+    .ui-filter-column .ui-column-customfilter .custom-filter {
+        width: 100%;
+        box-sizing: border-box;
+    }
+     
+    .year-spinner input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+ 	
+ 
+<h:form>
+    <p:dataTable  id="TablaExpo" var="expo" value="#{beanExpo.expos}"  widgetVar="Tabla" rowKey="#{expo.id}" selection="#{beanPara.elegido }"
+                emptyMessage="No se encontraron parametros con el filtro elegido" filteredValue="#{beanExpo.exposEle}" selectionMode="single">
+ 
+        <f:facet name="header">
+            <p:outputPanel>
+             	<p:commandButton value="Actualizar Tabla" id="actExpo" update="Tablaexpo"/>
+            	
+            	 	<p:commandButton value="Agregar Exposición" id="aExpo" action="#{beanExpo.dialogoRegistrar}">
+            	<p:ajax event="dialogReturn" update="@form"/></p:commandButton>
+              <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
+                <h:outputText value="Buscar En Tabla Parametros" />
+                <p:inputText id="globalFilter" onkeyup="PF('Tabla').filter()" style="width:150px" placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+ 	  	<p:column filterBy="#{expo.tipoExposicion}" headerText="Tipo Exposición"  filterMatchMode="contains">
+            <h:outputText value="#{expo.tipoExposicion}" />
+        </p:column>
+        <p:column filterBy="#expo.fechaInicial}" headerText="Fecha de Inicio" filterMatchMode="contains">
+            <h:outputText value="#{expo.fechaInicial}" />
+        </p:column>
+        <p:column filterBy="#{expo.fechaFinal}" headerText="Fecha de Clausura" filterMatchMode="contains">
+            <h:outputText value="#{expo.fechaFinal}" />
+        </p:column>
+        <p:column filterBy="#{expo.activo}" headerText="Estado"  filterMatchMode="contains">
+            <h:outputText value="#{expo.activo}" />
+        </p:column>
+        <p:column filterBy="#{expo.idProducto}" headerText="Tipo de Arte"  filterMatchMode="contains">
+            <h:outputText value="#{expo.idProducto}" />
+        </p:column>
+        <p:column filterBy="#{expo.descripcion}" headerText="Descripccion"  filterMatchMode="contains">
+            <h:outputText value="#{expo.descripcion}" />
+        </p:column>
+ 
+ 	<p:contextMenu for="TablaExpo">
+        <p:menuitem value="Mas Información/editar" update="TablaExpo" icon="pi pi-search" action="#{beanExpo.itemModificar}"/>
+      	<p:menuitem value="Eliminar" update="TablaExpo" icon="pi pi-search" action="#{beanExpo.itemEliminar}"/>
+    </p:contextMenu>
+    </p:dataTable>
+       <p:poll interval="20" update="TablaExpo"/>
+  
+</h:form>
+    </ui:define>
+</ui:composition>
+</html>

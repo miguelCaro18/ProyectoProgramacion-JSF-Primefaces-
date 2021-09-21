@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate2.xhtml">
+
+<h:form id="formu2223">
+</h:form>
+	<ui:define name="left">
+    <h:form id="form">
+    <p:growl id="messages" showDetail="true" >
+    <p:autoUpdate />
+</p:growl>
+ <p:menu>
+        <p:submenu label="Clientes">
+            <p:menuitem value="Gestión Compras" action="#{funcionesPase.pasarVistaCompras }" />
+            <p:menuitem value="Lista Clientes" action="#{funcionesPase.pasarVistaClientes }" />
+        </p:submenu>
+        <p:submenu label="Usuarios">
+            <p:menuitem value="Auditoria" action="#{funcionesPase.pasarVistaAuditoria}"   />
+            <p:menuitem value="Lista Usuarios" action="#{funcionesPase.pasarVistaUsuarios}"  />
+        </p:submenu>
+         <p:submenu label="Empresa y Parámetros">
+            <p:menuitem value="Empresa" action="#{funcionesPase.pasarVistaEmpresa}"  />
+            <p:menuitem value="Exposiciones" action="#{funcionesPase.pasarVistaExposiciones}" />
+            <p:menuitem value="Productos" action="#{funcionesPase.pasarVistaProductos}" />
+            <p:menuitem value="Categoria" action="#{funcionesPase.pasarVistaCategoria}" />
+            <p:menuitem value="Parámetros del Sistema" action="#{funcionesPase.pasarVistaParametros}" />
+        </p:submenu>
+    </p:menu>
+        <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
+    
+    </h:form>
+    
+	</ui:define>
+
+    <ui:define name="content">
+	
+	<style type="text/css">
+    .ui-datatable .ui-datatable-header {
+        text-align: right !important;
+    }
+     
+    .ui-button-text-only .ui-button-text {
+        padding: 0.3em 0.4em;
+    }
+     
+    .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+        visibility: hidden;
+    }
+     
+    .ui-filter-column .ui-column-customfilter .custom-filter {
+        width: 100%;
+        box-sizing: border-box;
+    }
+     
+    .year-spinner input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+</style>
+ 
+ 
+<h:form id="fumto">
+    <p:dataTable  id="productos" var="prod" value="#{beanProdu.productos}" rowKey="#{prod.id}" selection="#{beanProdu.productoElegido }" widgetVar="TablaProductos"
+                selectionMode="single" emptyMessage="No se encontraron Productos con el filtro elegido" filteredValue="#{beanProdu.productosElegidos}">
+        <f:facet name="header">
+            <p:outputPanel>
+            <p:commandButton value="Cerrar Sesión" action="#{funcionesPase.cerrarSesion}" ajax="false" ></p:commandButton>
+            	<p:commandButton value="Agregar Producto" id="aProduc" action="#{beanProdu.agregarNuevoProducto}">
+            	 <p:ajax event="dialogReturn" update="@form"/></p:commandButton>
+                <h:outputText value="Buscar en tabla Producto:" />
+                <p:inputText id="globalFilter" onkeyup="PF('TablaProductos').filter()" style="width:200px" placeholder="Palabra Clave"/>
+            </p:outputPanel>
+        </f:facet>
+ 
+ 	  <p:column filterBy="#{prod.nombre}" headerText="Nombre"  filterMatchMode="contains">
+            <h:outputText value="#{prod.nombre}" />
+        </p:column>
+        	  <p:column filterBy="#{prod.valorProducto}" headerText="Valor"  filterMatchMode="contains">
+            <h:outputText value="#{prod.valorProducto}" />
+        </p:column>
+        	  <p:column filterBy="#{prod.descripcion}" headerText="Descripción"  filterMatchMode="contains">
+            <h:outputText  value="#{prod.descripcion}" />
+        </p:column>
+
+        <p:column filterBy="#{beanProdu.estadoProducto(prod.activo)}" headerText="Estado" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('TablaProductos').filter()" styleClass="custom-filter">
+                    <f:selectItem itemLabel="seleccione" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{beanProdu.estados()}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{beanProdu.estadoProducto(prod.activo)}" />
+        </p:column>
+        
+
+    </p:dataTable>
+
+    <p:poll interval="10" update="productos"/>
+        <p:contextMenu for="productos">
+        <p:menuitem value="Mas Información/editar" update="@form" icon="pi pi-search" action="#{beanProdu.modificarProducto}"></p:menuitem>
+        <p:menuitem value="Eliminar" update="@form"  icon="pi pi-times" action="#{beanProdu.eliminarProducto }"/>
+    </p:contextMenu>
+</h:form>
+    </ui:define>
+</ui:composition>
+</html>

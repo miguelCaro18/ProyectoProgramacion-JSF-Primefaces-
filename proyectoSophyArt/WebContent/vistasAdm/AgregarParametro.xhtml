@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<title>Agregar Nuevo Usuario</title>
+<style type="text/css">
+    .ui-widget {
+        font-size: 90%;
+    }
+</style>
+    </h:head>
+     
+    <h:body>
+ <center>
+        <h:form>
+         <p:growl id="growl" showDetail="true"  />  
+            <h2>Nuevo Parametro</h2>
+            <h4>Formulario de Registro</h4>
+            <table>
+                <tr>
+                    <td>Codigo del Parametro</td>
+                    <td>
+                   <p:inputText id="codigo" value="#{beanPara.nuevoPara.codigoParametro}" required="true" maxlength="10">
+            		<p:keyFilter regEx="/[a-z0-9_]/i"/>  
+       				 </p:inputText>
+                    </td>
+                </tr>
+                <tr>
+					 <td>Ingrese Parametro:</td>
+                    <td>
+                        <p:inputText label="parametro"
+                                     id="parametro" value="#{beanPara.parametroNuevoString}"
+                                     required="true" maxlength="7" >
+                                     <p:keyFilter  for="parametro" mask="/[a-z0-9_]/i"/>  
+                                     </p:inputText>                         
+                    </td>
+                </tr>
+                               <tr>
+                    <td>Descripcción:</td>
+                    <td>
+                     <p:inputTextarea label="Descripccion" rows="5" cols="30" value="#{beanPara.nuevoPara.descripcion}" 
+                     counter="display" maxlength="60" counterTemplate="{0} faltantes." required="true" />
+                    </td>
+                </tr>
+                <tr>
+                <td></td>
+                <td><h:outputText id="display" />
+                </td></tr>
+            </table>           
+            <p><h:commandButton value="Register" action="#{beanPara.agregarParaDatos}" /></p>
+        </h:form>
+        </center>
+    </h:body>  
+</html>
